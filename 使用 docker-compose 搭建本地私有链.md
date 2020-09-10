@@ -6,7 +6,7 @@
 
 ### 第一步：下载仓库，进入项目目录，启动容器
 
-git clone https://github.com/chunqizhi/chaojigongshi-miners.git
+git clone https://github.com/chunqizhi/go-ethereum.git
 
 cd chaojigongshi-miners
 
@@ -58,12 +58,20 @@ personal.newAccount()
 
 miner.start(2)
 
-### 其他节点加入私有链，需要进入 chaojigongshi-miners 目录下的 others 目录启动容器
+### 其他节点以容器方式加入联盟链
 
-docker run -d --network chaojigongshi-miners_ethnet --name joinEthNode -v $PWD:/workspace --entrypoint /workspace/init.sh zfq17876911936/chaojigongshi-ethereum-client-go:eth-1.0 /workspace/mine.sh
+docker run -d --network chaojigongshi-miners_ethnet --name joinEthNode zfq17876911936/chaojigongshi-ethereum-client-go:eth-1.0
 
 docker exec -it joinEthNode  /bin/sh
 
-geth attach ~/data/geth.ipc
+geth attach geth.ipc
 
 admin.addPeer("enode://093e51559d86166edb07f3bb815367bb51898ad61d93d37752fe5f3324f9299d7fb02906b6de66dcfe97cba1d8ca02a30310abf77baf1d121beb6cc09ec59028@myEthNode:30303")
+
+## 其他节点以进程方式加入联盟链，以来持久化数据
+
+cd otherMiner
+
+cat REEADME.md
+
+admin.addPeer("enode://093e51559d86166edb07f3bb815367bb51898ad61d93d37752fe5f3324f9299d7fb02906b6de66dcfe97cba1d8ca02a30310abf77baf1d121beb6cc09ec59028@127.0.0.1:30303")
