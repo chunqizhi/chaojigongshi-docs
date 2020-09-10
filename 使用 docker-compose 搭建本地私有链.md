@@ -6,7 +6,7 @@
 
 ### 第一步：下载仓库，进入项目目录，启动容器
 
-git clone https://github.com/chunqizhi/go-ethereum.git
+git clone -b zcq https://github.com/chunqizhi/go-ethereum.git
 
 cd chaojigongshi-miners
 
