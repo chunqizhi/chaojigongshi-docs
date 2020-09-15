@@ -1,22 +1,16 @@
-
-
-
-
 ## 使用 docker-compose 启动容器
 
 ### 第一步：下载仓库，进入项目目录，启动容器
 
-git clone -b zcq https://github.com/chunqizhi/go-ethereum.git
+git clone https://github.com/chunqizhi/chaojigongshi-miners.git
 
-cd chaojigongshi-miners
-
-docker-compose up -d
+cat README.md
 
 ### 第二步：进入 myEthNode 容器，启动挖矿
 
-docker exec -it myEthNode /bin/sh
+docker exec -it myEthNode bash
 
-geth attach ~/data/geth.ipc
+geth attach geth.ipc
 
 miner.start(1)
 
@@ -30,11 +24,11 @@ docker logs -f myEthNode
 
 #### 操作 myEthOtherNode 容器
 
-docker exec -it myEthOtherNode /bin/sh
+docker exec -it myEthOtherNode bash
 
-geth attach ~/data/geth.ipc
+geth attach geth.ipc
 
-admin.addPeer("enode://093e51559d86166edb07f3bb815367bb51898ad61d93d37752fe5f3324f9299d7fb02906b6de66dcfe97cba1d8ca02a30310abf77baf1d121beb6cc09ec59028@myEthNode:30303")
+admin.addPeer("enode://45385c99ac12952ef0a84a7333b5258885a13036767fa381737ad5a1143b4430d36925abee752e8d445e0fe4d0927e1d02cbf03bd2706c8a5927a55b4d5c8559@myEthNode:30303")
 
 personal.newAccount()
 
@@ -42,15 +36,15 @@ personal.newAccount()
 
 miner.start(2)
 
-docker logs -f myEthOtherNode 
+docker logs -f myEthOtherNode
 
 #### 操作 myBtcpoolOtherNode 容器
 
-docker exec -it myBtcpoolOtherNode /bin/sh
+docker exec -it myBtcpoolOtherNode bash
 
-geth attach ~/data/geth.ipc
+geth attach geth.ipc
 
-admin.addPeer("enode://093e51559d86166edb07f3bb815367bb51898ad61d93d37752fe5f3324f9299d7fb02906b6de66dcfe97cba1d8ca02a30310abf77baf1d121beb6cc09ec59028@myEthNode:30303")
+admin.addPeer("enode://45385c99ac12952ef0a84a7333b5258885a13036767fa381737ad5a1143b4430d36925abee752e8d445e0fe4d0927e1d02cbf03bd2706c8a5927a55b4d5c8559@myEthNode:30303")
 
 personal.newAccount()
 
@@ -60,18 +54,18 @@ miner.start(2)
 
 ### 其他节点以容器方式加入联盟链
 
-docker run -d --network chaojigongshi-miners_ethnet --name joinEthNode zfq17876911936/chaojigongshi-ethereum-client-go:eth-1.0
+docker run -d --network chaojigongshi-miners_ethnet --name joinEthNode zfq17876911936/chaojigongshi-ethereum-client-go:eth-miningPool-1.0
 
-docker exec -it joinEthNode  /bin/sh
+docker exec -it joinEthNode bash
 
 geth attach geth.ipc
 
-admin.addPeer("enode://093e51559d86166edb07f3bb815367bb51898ad61d93d37752fe5f3324f9299d7fb02906b6de66dcfe97cba1d8ca02a30310abf77baf1d121beb6cc09ec59028@myEthNode:30303")
+admin.addPeer("enode://45385c99ac12952ef0a84a7333b5258885a13036767fa381737ad5a1143b4430d36925abee752e8d445e0fe4d0927e1d02cbf03bd2706c8a5927a55b4d5c8559@myEthNode:30303")
 
 ## 其他节点以进程方式加入联盟链，以来持久化数据
 
-cd otherMiner
+cd backup
 
 cat REEADME.md
 
-admin.addPeer("enode://093e51559d86166edb07f3bb815367bb51898ad61d93d37752fe5f3324f9299d7fb02906b6de66dcfe97cba1d8ca02a30310abf77baf1d121beb6cc09ec59028@127.0.0.1:30303")
+admin.addPeer("enode://45385c99ac12952ef0a84a7333b5258885a13036767fa381737ad5a1143b4430d36925abee752e8d445e0fe4d0927e1d02cbf03bd2706c8a5927a55b4d5c8559@127.0.0.1:30301")
