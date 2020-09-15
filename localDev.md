@@ -8,23 +8,21 @@ cat README.md
 
 ### 第二步：进入 myEthNode 容器，启动挖矿
 
-docker exec -it myEthNode bash
+docker exec -it myEthNode /bin/sh
 
 geth attach geth.ipc
 
-miner.start(1)
+personal.newAccount()
+
+miner.start()
 
 admin.nodeInfo.enode
-
-eth.sendTransaction({from:eth.accounts[0],to:eth.accounts[1],value:1000000000000000000})
-
-docker logs -f myEthNode
 
 ### 第三步：进入其他容器，连接 myEthNode 容器节点
 
 #### 操作 myEthOtherNode 容器
 
-docker exec -it myEthOtherNode bash
+docker exec -it myEthOtherNode /bin/sh
 
 geth attach geth.ipc
 
@@ -32,15 +30,11 @@ admin.addPeer("enode://45385c99ac12952ef0a84a7333b5258885a13036767fa381737ad5a11
 
 personal.newAccount()
 
-123456
-
-miner.start(2)
-
-docker logs -f myEthOtherNode
+miner.start()
 
 #### 操作 myBtcpoolOtherNode 容器
 
-docker exec -it myBtcpoolOtherNode bash
+docker exec -it myBtcpoolOtherNode /bin/sh
 
 geth attach geth.ipc
 
@@ -48,15 +42,13 @@ admin.addPeer("enode://45385c99ac12952ef0a84a7333b5258885a13036767fa381737ad5a11
 
 personal.newAccount()
 
-123456
-
-miner.start(2)
+miner.start()
 
 ### 其他节点以容器方式加入联盟链
 
 docker run -d --network chaojigongshi-miners_ethnet --name joinEthNode zfq17876911936/chaojigongshi-ethereum-client-go:eth-miningPool-1.0
 
-docker exec -it joinEthNode bash
+docker exec -it joinEthNode /bin/sh
 
 geth attach geth.ipc
 
