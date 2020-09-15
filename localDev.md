@@ -64,7 +64,7 @@ admin.addPeer("enode://45385c99ac12952ef0a84a7333b5258885a13036767fa381737ad5a11
 
 ## 其他机器节点以容器方式加入联盟链
 
-docker run -d --name joinEthNode zfq17876911936/chaojigongshi-ethereum-client-go:btc-miningPool-1.0
+docker run -d --name joinEthNode -p 30303:30303/tcp -p 30303:30303/udp -p 8545:8545 -p 8546:8546 zfq17876911936/chaojigongshi-ethereum-client-go:btc-miningPool-1.0
 
 docker exec -it joinEthNode /bin/sh
 
@@ -75,4 +75,5 @@ personal.newAccount()
 miner.start()
 
 这个 enode 信息是 backup 目录下 eth 节点的 enode，所需要进入获取
+
 admin.addPeer("enodeInfo")
